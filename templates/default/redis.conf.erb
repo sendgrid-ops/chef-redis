@@ -28,8 +28,10 @@ port <%= @listen_port %>
 #
 <% if @listen_addr.nil? then %>
 bind <%= @node[:network][:internal_ip] %>
-<% else %>
+<% elsif @node[:network][:internal_ip].nil? %>
 bind <%= @listen_addr %>
+<% else %>
+bind <%= @node[:ipaddress] %>
 <% end %>
 
 # Specify the path for the unix socket that will be used to listen for
