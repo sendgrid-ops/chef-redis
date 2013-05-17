@@ -2,10 +2,12 @@
 # The port that this sentinel instance will run on
 port <%= @port %>
 
-<% if @bind.nil? then %>
-bind <%= @node[:network][:internal_ip] %>
+<% if node[:network][:internal_ip] %>
+bind <%= node[:network][:internal_ip] %>
+<% elsif @listen_addr %>
+bind <%= @listen_addr %>
 <% else %>
-bind <%= @bind %>
+bind <%= node[:ipaddress] %>
 <% end %>
 
 
