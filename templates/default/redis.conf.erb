@@ -34,6 +34,10 @@ bind <%= node[:ipaddress] %>
 bind <%= @listen_addr %>
 <% end %>
 
+#debug
+#bind <%= @listen_addr %>
+#bind <%= node[:ipaddress] %>
+#bind <%= node[:network][:internal_ip] %>
 # Specify the path for the unix socket that will be used to listen for
 # incoming connections. There is no default, so Redis will not listen
 # on a unix socket when not specified.
