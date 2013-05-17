@@ -28,6 +28,8 @@ port <%= @listen_port %>
 #
 <% if @listen_addr.nil? then %>
 bind <%= node[:network][:internal_ip] %>
+<% elsif node[:network][:internal_ip].nil? %>
+bind <%= node[:ipaddress] %> 
 <% else %>
 bind <%= @listen_addr %>
 <% end %>
