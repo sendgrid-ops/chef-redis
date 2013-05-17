@@ -26,12 +26,12 @@ port <%= @listen_port %>
 # If you want you can bind a single interface, if the bind option is not
 # specified all the interfaces will listen for incoming connections.
 #
-<% if ! @listen_addr %>
+<% if node[:network][:internal_ip] %>
 bind <%= node[:network][:internal_ip] %>
-<% elsif ! node[:network][:internal_ip] and ! @listen_addr%>
-bind <%= node[:ipaddress] %> 
-<% else %>
+<% elsif @listen_addr %>
 bind <%= @listen_addr %>
+<% else %>
+bind <%= node[:ipaddress] %>
 <% end %>
 
 #debug
