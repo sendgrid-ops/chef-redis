@@ -23,6 +23,6 @@ recipe "redis::server_source", "Uses the recipe crumbs in the Redis cookbook to 
   supports os
 end
 
-%w[ build-essential runit yum sendgrid-ohai].each do |cookbook|
+%w[ build-essential runit yum sendgrid_ohai].each do |cookbook|
   depends cookbook
 end
