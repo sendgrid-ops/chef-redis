@@ -1,10 +1,16 @@
+if File.file?("version_wf")
+  version_var = IO.read(File.join(File.dirname(__FILE__), 'version_wf'))
+else
+  version_var = "0.0.0"
+end
+
 name "redis"
 maintainer       "Miah Johnson"
 maintainer_email "miah@cx.com"
 license          "Apache 2.0"
 description      "Installs/configures redis"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          IO.read(File.join(File.dirname(__FILE__), 'version_wf')) || "testing"
+version          version_var
 
 recipe "redis::_group", "Creates a group for Redis."
 recipe "redis::_server_config", "Creates configuration directories and installs templatized redis.conf."
@@ -26,3 +32,4 @@ end
 %w[ build-essential runit yum sendgrid_ohai].each do |cookbook|
   depends cookbook
 end
+
