@@ -32,4 +32,3 @@ end
 %w[ build-essential runit yum sendgrid_ohai].each do |cookbook|
   depends cookbook
 end
-
