@@ -1,0 +1,12 @@
+{
+    "contributing": [
+        "Replace with concise check"
+    ],
+    "name": "chef-redis",
+    "owner": "Operations Team",
+    "requires_owner_review": true,
+    "jenkins" : {
+        "master" : "chef-redis",
+        "upload" : "chef-redis"
+    }
+}

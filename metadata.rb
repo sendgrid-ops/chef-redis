@@ -1,3 +1,9 @@
+if File.file?("version_wf")
+  version_var = IO.read(File.join(File.dirname(__FILE__), 'version_wf'))
+else
+  version_var = "0.0.0"
+end
+
 name "redis"
 maintainer       "Miah Johnson"
 maintainer_email "miah@cx.com"
@@ -6,7 +12,7 @@ description      "Installs/configures redis"
 source_url 'https://github.com/sendgrid-ops/chef-redis'
 issues_url 'https://github.com/sendgrid-ops/chef-redis/issues'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "1.0.2"
+version          version_var
 
 recipe "redis::_group", "Creates a group for Redis."
 recipe "redis::_server_config", "Creates configuration directories and installs templatized redis.conf."
