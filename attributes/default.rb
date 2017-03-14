@@ -19,60 +19,60 @@
 #
 
 # installation
-default['redis']['install_type'] = "source"
-default['redis']['source']['sha'] = "ac420c9f01f5e1d4e977401936f8da81d2401e65c03de2e0ca11eba1cc71c874"
-default['redis']['source']['url'] = "http://redis.googlecode.com/files"
-default['redis']['source']['version'] = "2.4.9"
-default['redis']['src_dir'] = "/usr/src/redis"
-default['redis']['dst_dir'] = "/opt/redis"
-default['redis']['conf_dir'] = "/etc/redis"
-default['redis']['init_style'] = "init"
+default['redis']['install_type'] = 'source'
+default['redis']['source']['sha'] = 'ac420c9f01f5e1d4e977401936f8da81d2401e65c03de2e0ca11eba1cc71c874'
+default['redis']['source']['url'] = 'http://redis.googlecode.com/files'
+default['redis']['source']['version'] = '2.4.9'
+default['redis']['src_dir'] = '/usr/src/redis'
+default['redis']['dst_dir'] = '/opt/redis'
+default['redis']['conf_dir'] = '/etc/redis'
+default['redis']['init_style'] = 'init'
 
 # service user & group
-default['redis']['user'] = "redis"
-default['redis']['group'] = "redis"
+default['redis']['user'] = 'redis'
+default['redis']['group'] = 'redis'
 
 # configuration
-default['redis']['config']['appendonly'] = "yes"
-default['redis']['config']['appendfsync'] = "everysec"
-default['redis']['config']['daemonize'] = "yes"
-default['redis']['config']['databases'] = "16"
-default['redis']['config']['dbfilename'] = "dump.rdb"
-default['redis']['config']['dir'] = "/var/lib/redis"
-default['redis']['config']['listen_port'] = "6379"
-default['redis']['config']['logfile'] = "stdout"
-default['redis']['config']['loglevel'] = "warning"
-default['redis']['config']['pidfile'] = "/var/run/redis.pid"
-default['redis']['config']['rdbcompression'] = "yes"
-default['redis']['config']['timeout'] = "300"
-default['redis']['config']['unixsocket'] = "/tmp/redis.sock"
-default['redis']['config']['unixsocketperm'] = "755"
+default['redis']['config']['appendonly'] = 'yes'
+default['redis']['config']['appendfsync'] = 'everysec'
+default['redis']['config']['daemonize'] = 'yes'
+default['redis']['config']['databases'] = '16'
+default['redis']['config']['dbfilename'] = 'dump.rdb'
+default['redis']['config']['dir'] = '/var/lib/redis'
+default['redis']['config']['listen_port'] = '6379'
+default['redis']['config']['logfile'] = 'stdout'
+default['redis']['config']['loglevel'] = 'warning'
+default['redis']['config']['pidfile'] = '/var/run/redis.pid'
+default['redis']['config']['rdbcompression'] = 'yes'
+default['redis']['config']['timeout'] = '300'
+default['redis']['config']['unixsocket'] = '/tmp/redis.sock'
+default['redis']['config']['unixsocketperm'] = '755'
 
 ###
 ## the following configuration settings may only work with a recent redis release
 ###
 
-default['redis']['config']['slave_serve_stale_data'] = "yes"
+default['redis']['config']['slave_serve_stale_data'] = 'yes'
 default['redis']['config']['repl_ping_slave_period'] = 10
 default['redis']['config']['repl_timeout'] = 60
-default['redis']['config']['repl_disable_tcp_nodelay'] = "no"
+default['redis']['config']['repl_disable_tcp_nodelay'] = 'no'
 default['redis']['config']['slave_priority'] = 100
-default['redis']['config']['slave_read_only'] = "no"
+default['redis']['config']['slave_read_only'] = 'no'
 default['redis']['config']['maxclients'] = 128
 
 default['redis']['config']['configure_slowlog'] = false
-default['redis']['config']['slowlog_log_slower_than'] = "10000"
-default['redis']['config']['slowlog_max_len'] = "1024"
+default['redis']['config']['slowlog_log_slower_than'] = '10000'
+default['redis']['config']['slowlog_max_len'] = '1024'
 
 default['redis']['config']['configure_maxmemory_samples'] = false
-default['redis']['config']['maxmemory_samples'] = "3"
+default['redis']['config']['maxmemory_samples'] = '3'
 
 default['redis']['config']['configure_no_appendfsync_on_rewrite'] = false
-default['redis']['config']['no_appendfsync_on_rewrite'] = "no"
+default['redis']['config']['no_appendfsync_on_rewrite'] = 'no'
 
 default['redis']['config']['configure_list_max_ziplist'] = false
-default['redis']['config']['list_max_ziplist_entries'] = "512"
-default['redis']['config']['list_max_ziplist_value'] = "64"
+default['redis']['config']['list_max_ziplist_entries'] = '512'
+default['redis']['config']['list_max_ziplist_value'] = '64'
 
 default['redis']['config']['configure_set_max_intset_entries'] = false
-default['redis']['config']['set_max_intset_entries'] = "512"
+default['redis']['config']['set_max_intset_entries'] = '512'

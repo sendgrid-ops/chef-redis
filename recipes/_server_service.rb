@@ -3,15 +3,15 @@
 # Recipe:: _server_service
 
 redis_service = case node['platform']
-when "ubuntu", "debian"
-  "redis-server"
-when "centos", "redhat"
-  "redis"
+when 'ubuntu', 'debian'
+  'redis-server'
+when 'centos', 'redhat'
+  'redis'
 else
-  "redis"
+  'redis'
 end
 
-service "redis" do
+service 'redis' do
   service_name redis_service
-  action [ :enable, :start ]
+  action [:enable, :start]
 end
