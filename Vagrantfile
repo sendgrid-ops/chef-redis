@@ -2,14 +2,14 @@ begin
   require 'berkshelf/vagrant'
 rescue LoadError
   puts "[WARNING] Berkshelf not found in your Vagrant's RubyGems but your Vagrantfile is attempting"
-  puts "[WARNING] to require the Berkshelf Vagrant plugin! Install the Berkshelf Vagrant plugin or"
+  puts '[WARNING] to require the Berkshelf Vagrant plugin! Install the Berkshelf Vagrant plugin or'
   puts "[WARNING] remove the 'require \"berkshelf/vagrant\"' line from the top of your Vagrantfile."
-  puts ""
-  puts "If you installed Vagrant by RubyGems:"
-  puts "  Install Berkshelf by running: \"gem install berkshelf\""
-  puts "If you installed Vagrant by one of the pre-packaged installers:"
-  puts "  Install Berkshelf by running: \"vagrant gem install berkshelf\""
-  puts ""
+  puts ''
+  puts 'If you installed Vagrant by RubyGems:'
+  puts '  Install Berkshelf by running: "gem install berkshelf"'
+  puts 'If you installed Vagrant by one of the pre-packaged installers:'
+  puts '  Install Berkshelf by running: "vagrant gem install berkshelf"'
+  puts ''
 end
 
 Vagrant::Config.run do |config|
@@ -28,10 +28,10 @@ Vagrant::Config.run do |config|
   # to skip installing and copying to Vagrant's shelf.
   # config.berkshelf.except = []
 
-  config.vm.host_name = "redis-berkshelf"
+  config.vm.host_name = 'redis-berkshelf'
 
-  config.vm.box = "sendgrid_centos-6.4_chef-11"
-  config.vm.box_url = "http://http://repo.sendgrid.net/sendgrid_centos-6.4_chef-11"
+  config.vm.box = 'sendgrid_centos-6.4_chef-11'
+  config.vm.box_url = 'http://http://repo.sendgrid.net/sendgrid_centos-6.4_chef-11'
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
@@ -40,7 +40,7 @@ Vagrant::Config.run do |config|
   # via the IP. Host-only networks can talk to the host machine as well as
   # any other machines on the same network, but cannot be accessed (through this
   # network interface) by any external networks.
-  config.vm.network :hostonly, "33.33.33.10"
+  config.vm.network :hostonly, '33.33.33.10'
 
   # Assign this VM to a bridged network, allowing you to connect directly to a
   # network using the host's network device. This makes the VM appear as another
@@ -62,15 +62,15 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
-      :mysql => {
-        :server_root_password => 'rootpass',
-        :server_debian_password => 'debpass',
-        :server_repl_password => 'replpass'
-      }
+      mysql: {
+        server_root_password: 'rootpass',
+        server_debian_password: 'debpass',
+        server_repl_password: 'replpass',
+      },
     }
 
     chef.run_list = [
-      "recipe[redis::default]"
+      'recipe[redis::default]',
     ]
   end
 end
