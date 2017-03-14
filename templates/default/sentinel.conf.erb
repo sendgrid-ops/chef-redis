@@ -2,12 +2,12 @@
 # The port that this sentinel instance will run on
 port <%= @port %>
 
-<% if node[:network][:internal_ip] %>
-bind <%= node[:network][:internal_ip] %>
+<% if node['network']['internal_ip'] %>
+bind <%= node['network']['internal_ip'] %>
 <% elsif @listen_addr %>
 bind <%= @listen_addr %>
 <% else %>
-bind <%= node[:ipaddress] %>
+bind <%= node['ipaddress'] %>
 <% end %>
 
 
@@ -31,7 +31,7 @@ pidfile <%= @pidfile %>
 <% @masters.each do |name, options| %>
 # Config for <%= name %> master
 <% if options['ip'].nil? then %>
-sentinel monitor <%= name %> <%= @node[:network][:internal_ip] %> <%= options['port'] %> <%= options['quorum'] %>
+sentinel monitor <%= name %> <%= @node['network']['internal_ip'] %> <%= options['port'] %> <%= options['quorum'] %>
 <% else %>
 sentinel monitor <%= name %> <%= options['ip'] %> <%= options['port'] %> <%= options['quorum'] %>
 <% end %>
@@ -64,7 +64,7 @@ sentinel failover-timeout <%= name %> <%= options['failover_timeout'] %>
 # NOTIFICATION SCRIPT
 #
 # sentinel notification-script <master-name> <script-path>
-# 
+#
 # Call the specified notification script for any sentienl event that is
 # generated in the WARNING level (for instance -sdown, -odown, and so forth).
 # This script should notify the system administrator via email, SMS, or any
@@ -88,7 +88,7 @@ sentinel failover-timeout <%= name %> <%= options['failover_timeout'] %>
 # When the failover starts, ends, or is aborted, a script can be called in
 # order to perform application-specific tasks to notify the clients that the
 # configuration has changed and the master is at a different address.
-# 
+#
 # The script is called in the following cases:
 #
 # Failover started (a slave is already promoted)
@@ -103,7 +103,7 @@ sentinel failover-timeout <%= name %> <%= options['failover_timeout'] %>
 #
 # <state> is "start", "end" or "abort"
 # <role> is either "leader" or "observer"
-# 
+#
 # The arguments from-ip, from-port, to-ip, to-port are used to communicate
 # the old address of the master and the new address of the elected slave
 # (now a master) in the case state is "start" or "end".

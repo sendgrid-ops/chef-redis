@@ -24,7 +24,7 @@ include_recipe 'redis::_user'
 
 case node['redis']['install_type']
 when 'package'
-  raise "Sentinel cookbook with a package install is thoroughly untested. It should work, but it's up to you to try it!"
+  raise 'Sentinel cookbook with a package install is thoroughly untested. It should work, but it\'s up to you to try it!'
 when 'source'
   include_recipe 'redis::_server_install_from_source'
 end
