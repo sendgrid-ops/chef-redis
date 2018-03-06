@@ -1,0 +1,143 @@
+
+# Welcome to your pipeline.yml file. This file is what controls what is ran during your
+# build. This is a direct port of the job you were running in jenkins. We've added
+# some suggestions (commented out), but we have not changed any of your logic.
+#
+# Feel free to change it, but please remember that the more you change it, the
+# less we are able to help you figure out what went wrong!
+#
+# For information on some of the things you can do inside of this file, please
+# check out the buildkite documentation here:
+# https://buildkite.com/docs/pipelines/defining-steps
+steps:
+
+  ##############################
+  # Pre-build Environment Checks
+  ##############################
+
+  # Pipeline revision is our gate that lets you into the new logic.
+  # You need to make chef-data consul changes, and chef changes
+  # in order to use this new flow. You will probably want to
+  # pair with the autobots in order to get this converted.
+  #
+  # UNCOMMENTING THIS WITHOUT FULLY RUNNING STEPS IN WIKI WILL BREAK YOUR VERSIONING
+  # https://wiki.sendgrid.net/x/QSfLAg
+  # - label: 'set pipeline revision'
+  #   command:
+  #     - 'buildkite-agent meta-data set PIPELINE_REVISION `echo 0.0.1`'
+
+  - wait
+
+
+  # The purpose of the status check script is to add a comment to your
+  # pull requests that indicates whether or not this PR is ready to merge.
+  # If your repo is part of the SOX or SOC2 audit, do not remove this!
+  - label: 'status_check'
+    command: 'workflow status_checks'
+    branches: '!master'
+
+  - wait
+
+
+  ##############################
+  # Build it & Package it
+  ##############################
+
+  # The purpose of this command is to execute kitchen converge in a standard manner.
+  - label: 'foodcritic'
+    command:
+      - chef exec foodcritic --epic-fail any .
+    agents:
+      queue: 'chef'
+
+  - label: 'berks'
+    command:
+      - chef exec berks
+    env:
+      SOLVE_TIMEOUT: 900
+    agents:
+      queue: 'chef'
+
+  - wait
+
+  # The purpose of this command is to execute kitchen converge in a standard manner.
+  - label: 'kitchen_converge_default'
+    env:
+      # Set this to true to run your converge in debug mode
+      CONVERGEDEBUG: false
+    command:
+      - 'chef exec kitchen test default'
+      - 'chef exec kitchen destroy default'
+    agents:
+      queue: 'chef'
+
+  # If you add additional suites, give them their own block so that they can
+  # run as separate steps at the same time
+  #
+  # - label: 'kitchen_converge_example'
+  #   env:
+  #     # Set this to true to run your converge in debug mode
+  #     CONVERGEDEBUG: false
+  #   command:
+  #     - 'chef exec kitchen test example'
+  #     - 'chef exec kitchen destroy example'
+  #   agents:
+  #     queue: 'chef'
+
+  - wait
+
+
+  ##############################
+  # Publish it
+  ##############################
+
+  # The purpose of this script is to upload your cookbook
+  - label: 'upload_chef_cookbook'
+    command: 'workflow upload_chef_cookbook'
+    agents:
+      queue: 'chef'
+
+
+  - wait
+
+
+  ##############################
+  # Post-Publish
+  ##############################
+
+  # This block of steps is only going to work once you migrate to the
+  # new pipeline revision logic.
+  #
+  # UNCOMMENTING THIS WITHOUT FULLY RUNNING STEPS IN WIKI WILL BREAK YOUR BUILD
+  # https://wiki.sendgrid.net/x/QSfLAg
+  #
+  # - wait
+  #
+  # # Automatically approve and merge any chef-data prs that were created
+  # # against the testing environment.
+  # - label: 'approve and merge testing chef-data PRs'
+  #   command:
+  #     - 'buildkite-agent artifact download pipeline_chef_data_pull_request .'
+  #     - 'workflow bk_approve_chef-data_pr'
+  #   branches: 'master'
+  #
+  # - wait
+  # # Automatically run the consul upload for chef-data.
+  # - label: 'upload chef-data PRs'
+  #   command:
+  #     - 'buildkite-agent artifact download pipeline_chef_data_pull_request .'
+  #     - 'workflow bk_upload_chef-data'
+  #   branches: 'master'
+  #   agents:
+  #     queue: 'chef'
+
+  # - wait
+  # # You will want to write your own verification script to make sure that
+  # # your app has been successfully uploaded to the end to end environment.
+  # # please see ussr for an example of what they wrote:
+  # # https://github.com/sendgrid/ussr/blob/master/bin/bk_verify_e2e.sh
+  # - label: 'verify chef-data PRs'
+  #   command:
+  #     - 'buildkite-agent artifact download pipeline_chef_data_pull_request .'
+  #     - './bin/bk_verify_e2e.sh'
+  #   branches: 'master'
